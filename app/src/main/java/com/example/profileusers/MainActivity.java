@@ -1,6 +1,7 @@
 package com.example.profileusers;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -15,9 +16,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        UserProfileFragment userProfileFragment = new UserProfileFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_fragment_container, userProfileFragment).commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment userProfileFragment = fragmentManager.findFragmentById(R.id.main_fragment_container);
+        if (userProfileFragment == null) {
+            userProfileFragment = new UserProfileFragment();
+            fragmentManager.beginTransaction()
+                    .add(R.id.main_fragment_container, userProfileFragment)
+                    .commit();
+        }
 
     }
 }
