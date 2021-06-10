@@ -36,6 +36,7 @@ public class UserProfileFragment extends Fragment {
     private ActivityResultLauncher<String> mPermissionResult;
 
     private UserProfileFragmentBinding binding;
+    //передать ссылку на ViewModel
     private UserProfileViewModel viewModel;
 
 
