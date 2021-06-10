@@ -57,6 +57,22 @@ public class UserProfileFragment extends Fragment {
                         }
                     }
                 });
+
+        mPermissionResult = registerForActivityResult(
+                new ActivityResultContracts.RequestPermission(),
+                new ActivityResultCallback<Boolean>() {
+                    @Override
+                    public void onActivityResult(Boolean result) {
+
+                        if (result) {
+                            Log.d("TEST", "Permission granted...!");
+                            //Toast.makeText(getContext(), "Permission granted...!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.d("TEST", "Permission denied...!");
+                            //Toast.makeText(getContext(), "Permission denied...!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
 
@@ -78,7 +94,7 @@ public class UserProfileFragment extends Fragment {
 
                         //String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
 
-                        mPermissionResult.launch(Manifest.permission.READ_EXTERNAL_STORAGE,null);
+                        mPermissionResult.launch(Manifest.permission.READ_EXTERNAL_STORAGE, null);
 
                         //ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_CODE);
                         //requestPermissions(permissions, PERMISSION_CODE);
