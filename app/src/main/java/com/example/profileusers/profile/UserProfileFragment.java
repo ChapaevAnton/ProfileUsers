@@ -119,6 +119,7 @@ public class UserProfileFragment extends Fragment {
         //startActivityForResult(intent, IMAGE_PICK_CODE);
     }
 
+    //("deprecation")
 //    @Override
 //    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 //        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
