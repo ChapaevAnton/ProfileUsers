@@ -24,15 +24,19 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.profileusers.R;
+import com.example.profileusers.databinding.UserProfileFragmentBinding;
 
 public class UserProfileFragment extends Fragment {
-    private static final int PERMISSION_CODE = 1000;
+    //private static final int PERMISSION_CODE = 1000;
     //private static final int IMAGE_PICK_CODE = 1001;
     //private static final int RESULT_OK = -1;
     private ImageView userPhoto;
     private Button selectPhotoButton;
     private ActivityResultLauncher<Intent> someActivityResultLauncher;
     private ActivityResultLauncher<String> mPermissionResult;
+
+    private UserProfileFragmentBinding binding;
+    private UserProfileViewModel viewModel;
 
 
     @Override
@@ -52,21 +56,6 @@ public class UserProfileFragment extends Fragment {
                         }
                     }
                 });
-
-        mPermissionResult = registerForActivityResult(
-                new ActivityResultContracts.RequestPermission(),
-                new ActivityResultCallback<Boolean>() {
-                    @Override
-                    public void onActivityResult(Boolean result) {
-                        if (result)
-                            Log.d("TEST", "Permission granted...!");
-                            //Toast.makeText(getContext(), "Permission granted...!", Toast.LENGTH_SHORT).show();
-                        else
-                            //Toast.makeText(getContext(), "Permission denied...!", Toast.LENGTH_SHORT).show();
-                            Log.d("TEST", "Permission denied...!");
-                    }
-                });
-
     }
 
 
@@ -75,6 +64,7 @@ public class UserProfileFragment extends Fragment {
 
         View fragmentView = inflater.inflate(R.layout.user_profile_fragment, container, false);
         if (fragmentView != null) {
+
             userPhoto = fragmentView.findViewById(R.id.user_photo);
             selectPhotoButton = fragmentView.findViewById(R.id.select_photo_button);
 
