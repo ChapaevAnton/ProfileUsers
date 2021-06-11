@@ -9,8 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -18,19 +16,15 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.profileusers.R;
 import com.example.profileusers.databinding.UserProfileFragmentBinding;
 
 public class UserProfileFragment extends Fragment {
-    private static final int PERMISSION_CODE = 1000;
-    private ImageView userPhoto;
-    private Button selectPhotoButton;
+
     private ActivityResultLauncher<Intent> someActivityResultLauncher;
     private ActivityResultLauncher<String> mPermissionResult;
 
@@ -87,39 +81,8 @@ public class UserProfileFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.user_profile_fragment, container, false);
         binding.setLifecycleOwner(getViewLifecycleOwner());
         binding.setUserprofile(viewModel);
-
-
         return binding.getRoot();
 
-//        View fragmentView = inflater.inflate(R.layout.user_profile_fragment, container, false);
-//        if (fragmentView != null) {
-//
-//            userPhoto = fragmentView.findViewById(R.id.user_photo);
-//            selectPhotoButton = fragmentView.findViewById(R.id.select_photo_button);
-//
-//            selectPhotoButton.setOnClickListener(view -> {
-//                //check permissions
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    if ((fragmentView
-//                            .getContext()
-//                            .checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) == PackageManager.PERMISSION_DENIED) {
-//
-//                        //String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-//
-//                        mPermissionResult.launch(Manifest.permission.READ_EXTERNAL_STORAGE, null);
-//
-//                        //ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_CODE);
-//                        //requestPermissions(permissions, PERMISSION_CODE);
-//
-//                    } else {
-//                        selectPhoto();
-//                    }
-//                } else {
-//                    selectPhoto();
-//                }
-//            });
-//        }
-//        return fragmentView;
     }
 
 
@@ -131,7 +94,7 @@ public class UserProfileFragment extends Fragment {
         });
 
         viewModel.getShowPermission().observe(getViewLifecycleOwner(), event -> {
-           if(event.isHandled()) showPermission();
+            if (event.isHandled()) showPermission();
         });
 
     }
@@ -143,9 +106,11 @@ public class UserProfileFragment extends Fragment {
 
     }
 
-    void showPermission(){
-        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-        ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_CODE);
+    void showPermission() {
+        //String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+        //ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_CODE);
+        //альтернативный вариант
+        mPermissionResult.launch(Manifest.permission.READ_EXTERNAL_STORAGE, null);
     }
 
 }
