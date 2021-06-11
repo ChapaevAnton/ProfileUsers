@@ -15,14 +15,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment userProfileFragment = fragmentManager.findFragmentById(R.id.main_fragment_container);
-        if (userProfileFragment == null) {
-            userProfileFragment = new UserProfileFragment();
-            fragmentManager.beginTransaction()
-                    .add(R.id.main_fragment_container, userProfileFragment)
-                    .commit();
-        }
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        Fragment userProfileFragment = fragmentManager.findFragmentById(R.id.main_fragment_container);
+//        if (userProfileFragment == null) {
+//            userProfileFragment = new UserProfileFragment();
+//            fragmentManager.beginTransaction()
+//                    .add(R.id.main_fragment_container, userProfileFragment)
+//                    .commit();
+//        }
 
     }
 }
