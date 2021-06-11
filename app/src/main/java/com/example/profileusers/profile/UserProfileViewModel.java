@@ -53,7 +53,7 @@ public class UserProfileViewModel extends AndroidViewModel {
 
         return ActivityCompat.checkSelfPermission(
                 getApplication(), Manifest.permission.READ_EXTERNAL_STORAGE
-        ) == PackageManager.PERMISSION_DENIED;
+        ) != PackageManager.PERMISSION_DENIED;
     }
 
 
