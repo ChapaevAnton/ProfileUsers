@@ -8,8 +8,13 @@ import androidx.databinding.BindingAdapter;
 public class Utils {
 
     @BindingAdapter({"app:loadImage"})
-    public static void loadImage(ImageView imageView, Uri photo){
+    public static void loadImage(ImageView imageView, Uri photo) {
         imageView.setImageURI(photo);
+    }
+
+    @BindingAdapter({"app:loadImageGallery"})
+    public static void loadImage(ImageView imageView, int photo) {
+        imageView.setImageResource(photo);
     }
 
 }
