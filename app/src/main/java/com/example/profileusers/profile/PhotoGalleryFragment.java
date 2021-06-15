@@ -51,7 +51,7 @@ public class PhotoGalleryFragment extends Fragment {
 
         binding.photoRecyclerView.setAdapter(photoGalleryAdapter);
 
-        viewModel.getItemsListPhoto().observe(getViewLifecycleOwner(), listPhoto -> {
+        viewModel.getItemsListPhotos().observe(getViewLifecycleOwner(), listPhoto -> {
             photoGalleryAdapter.setItems(listPhoto);
         });
 

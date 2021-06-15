@@ -2,17 +2,17 @@ package com.example.profileusers.profile;
 
 public class Photo {
 
-    public Photo(int photo) {
+    private String photo;
+
+    public Photo(String photo) {
         this.photo = photo;
     }
 
-    private int photo;
-
-    public void setPhoto(int photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
-    public int getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 }

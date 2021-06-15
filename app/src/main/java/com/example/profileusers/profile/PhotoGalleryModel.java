@@ -1,35 +1,44 @@
 package com.example.profileusers.profile;
 
+import android.util.Log;
+
 import java.io.File;
 import java.util.ArrayList;
 
 public class PhotoGalleryModel {
 
-    private ArrayList<File> fileList = new ArrayList<>();
+    private final ArrayList<Photo> listPhotos = new ArrayList<>();
 
+    public ArrayList<Photo> getListPhotos(File root) {
+        for (File file : searchFilesPaths(root)) {
+            listPhotos.add(new Photo(file.getAbsolutePath()));
+        }
+        return listPhotos;
+    }
 
-    public ArrayList<File> getFile(File dir) {
-        File listFile[] = dir.listFiles();
-        if (listFile != null && listFile.length > 0) {
-            for (File file : listFile) {
-                if (file.isDirectory()) {
-                    getFile(file);
-                }
-                else {
-                    if (file.getName().endsWith(".png")
-                            || file.getName().endsWith(".jpg")
-                            || file.getName().endsWith(".jpeg")
-                            || file.getName().endsWith(".gif")
-                            || file.getName().endsWith(".bmp")
-                            || file.getName().endsWith(".webp"))
-                    {
-                        String temp = file.getPath().substring(0, file.getPath().lastIndexOf('/'));
-                        if (!fileList.contains(temp))
-                            fileList.add(new File(temp));
+    private ArrayList<File> searchFilesPaths(File root) {
+        ArrayList<File> fileList = new ArrayList<>();
+        if (root.isDirectory()) {
+            File[] directoryFiles = root.listFiles();
+            if (directoryFiles != null) {
+                for (File file : directoryFiles) {
+                    if (file.isDirectory()) {
+                        fileList.addAll(searchFilesPaths(file));
+                    } else {
+                        if (file.getName().toLowerCase().endsWith(".jpg")
+                                || file.getName().toLowerCase().endsWith(".jpg")
+                                || file.getName().toLowerCase().endsWith(".jpeg")
+                                || file.getName().toLowerCase().endsWith(".gif")
+                                || file.getName().toLowerCase().endsWith(".bmp")
+                                || file.getName().toLowerCase().endsWith(".webp")) {
+                            fileList.add(file);
+                            Log.d("TEST", file.getAbsolutePath());
+                        }
                     }
                 }
             }
         }
+
         return fileList;
     }
 

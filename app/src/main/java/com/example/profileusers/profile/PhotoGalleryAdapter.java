@@ -23,6 +23,7 @@ public class PhotoGalleryAdapter extends RecyclerView.Adapter<PhotoGalleryAdapte
     }
 
 
+    @NonNull
     @Override
     public PhotoGalleryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new PhotoGalleryHolder(
