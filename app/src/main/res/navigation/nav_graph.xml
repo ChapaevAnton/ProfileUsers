@@ -10,4 +10,10 @@
         android:name="com.example.profileusers.profile.UserProfileFragment"
         android:label="UserProfileFragment"
         tools:layout="@layout/user_profile_fragment"/>
+
+    <fragment
+        android:id="@+id/photoGalleryFragment"
+        android:name="com.example.profileusers.profile.PhotoGalleryFragment"
+        android:label="PhotoGalleryFragment"
+        tools:layout="@layout/photo_gallery_fragment"/>
 </navigation>
