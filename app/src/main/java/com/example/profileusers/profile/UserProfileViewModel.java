@@ -16,7 +16,14 @@ public class UserProfileViewModel extends AndroidViewModel {
     private final MutableLiveData<Event> selectPhoto = new MutableLiveData<>();
     private final MutableLiveData<Event> showPermission = new MutableLiveData<>();
     private final MutableLiveData<Uri> photo = new MutableLiveData<>();
+    private final MutableLiveData<Event> showPhotoGallery = new MutableLiveData<>();
 
+    //галерея фотографий
+    public LiveData<Event> getShowPhotoGallery() {
+        return showPhotoGallery;
+    }
+
+    //фотография
     public LiveData<Uri> getPhoto() {
         return photo;
     }
@@ -44,6 +51,11 @@ public class UserProfileViewModel extends AndroidViewModel {
             showPermission.setValue(new Event(new Bundle()));
 
     }
+
+    public void onSelectPhotoGalleryClicked(){
+        showPhotoGallery.setValue(new Event(new Bundle()));
+    }
+
 
     public void loadInImageView(Uri uriPhoto) {
         photo.setValue(uriPhoto);

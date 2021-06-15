@@ -7,7 +7,7 @@
 
         <variable
             name="userprofile"
-            type="com.example.profileusers.profile.PhotoGalleryFragment" />
+            type="com.example.profileusers.profile.PhotoGalleryViewModel" />
 
     </data>
 
@@ -21,6 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TEST"
+            android:textColor="#2196F3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

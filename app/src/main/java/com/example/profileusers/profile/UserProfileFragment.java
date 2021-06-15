@@ -20,6 +20,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.profileusers.MainActivity;
 import com.example.profileusers.R;
 import com.example.profileusers.databinding.UserProfileFragmentBinding;
 
@@ -97,20 +98,29 @@ public class UserProfileFragment extends Fragment {
             if (event.isHandled()) showPermission();
         });
 
+        viewModel.getShowPhotoGallery().observe(getViewLifecycleOwner(), event -> {
+            if (event.isHandled()) MainActivity.userProfileToPhotoGallery(requireActivity());
+        });
+
     }
 
-    void selectPhoto() {
+
+    private void selectPhoto() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         someActivityResultLauncher.launch(intent);
 
     }
 
-    void showPermission() {
+
+    private void showPermission() {
         //String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
         //ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_CODE);
         //альтернативный вариант
         mPermissionResult.launch(Manifest.permission.READ_EXTERNAL_STORAGE, null);
     }
+
+
+
 
 }
