@@ -52,8 +52,11 @@ public class UserProfileViewModel extends AndroidViewModel {
 
     }
 
-    public void onSelectPhotoGalleryClicked(){
-        showPhotoGallery.setValue(new Event(new Bundle()));
+    public void onSelectPhotoGalleryClicked() {
+        if (isPermission())
+            showPhotoGallery.setValue(new Event(new Bundle()));
+        else
+            showPermission.setValue(new Event(new Bundle()));
     }
 
 
