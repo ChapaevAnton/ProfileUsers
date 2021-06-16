@@ -10,9 +10,11 @@ public class PhotoGalleryModel {
     private final ArrayList<Photo> listPhotos = new ArrayList<>();
 
     public ArrayList<Photo> getListPhotos(File root) {
+        Log.d("TEST", "searchFilesPaths: LOAD START ");
         for (File file : searchFilesPaths(root)) {
             listPhotos.add(new Photo(file.getAbsolutePath()));
         }
+        Log.d("TEST", "searchFilesPaths: LOAD STOP");
         Log.d("TEST", String.valueOf(listPhotos.size()));
         return listPhotos;
     }
