@@ -23,6 +23,8 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
 
     private final PhotoGalleryModel model = new PhotoGalleryModel();
     private final MutableLiveData<List<Photo>> itemsListPhotos = new MutableLiveData<>();
+
+    private final MutableLiveData<Photo> itemPhoto = new MutableLiveData<>();
     private final List<Photo> listPhotos = new ArrayList<>();
     private PhotoClickListener photoClickListener;
 
@@ -36,6 +38,10 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
 
     public LiveData<List<Photo>> getItemsListPhotos() {
         return itemsListPhotos;
+    }
+
+    public LiveData<Photo> getItemPhoto() {
+        return itemPhoto;
     }
 
     public void setPhotoClickListener(PhotoClickListener photoClickListener) {

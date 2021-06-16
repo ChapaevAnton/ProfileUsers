@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.profileusers.MainActivity;
@@ -26,6 +27,7 @@ import com.example.profileusers.databinding.UserProfileFragmentBinding;
 
 public class UserProfileFragment extends Fragment {
 
+    private static final String PHOTO_TRANSFER = "photo_transfer";
     private ActivityResultLauncher<Intent> someActivityResultLauncher;
     private ActivityResultLauncher<String> mPermissionResult;
 
@@ -43,6 +45,13 @@ public class UserProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+         getChildFragmentManager().setFragmentResultListener(PHOTO_TRANSFER, this, new FragmentResultListener() {
+             @Override
+             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                String photoPath = result.getString(PHOTO_TRANSFER);
+             }
+         });
+
 
         someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -119,8 +128,6 @@ public class UserProfileFragment extends Fragment {
         //альтернативный вариант
         mPermissionResult.launch(Manifest.permission.READ_EXTERNAL_STORAGE, null);
     }
-
-
 
 
 }

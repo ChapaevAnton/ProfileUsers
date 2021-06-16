@@ -12,3 +12,5 @@ https://stackoverflow.com/questions/31154777/how-to-read-image-from-internal-mem
 https://stackoverflow.com/questions/35607907/android-retrieve-all-image-directories/35608181
 https://stackoverflow.com/questions/30777023/displaying-all-images-from-device-in-my-app
 https://developer.android.com/training/data-storage/shared/media
+
+https://developer.android.com/guide/fragments/communicate
