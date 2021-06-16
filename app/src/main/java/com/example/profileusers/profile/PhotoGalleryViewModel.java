@@ -16,7 +16,9 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
 
     public PhotoGalleryViewModel(@NonNull Application application) {
         super(application);
+        loadListPhoto();
     }
+
 
     private final PhotoGalleryModel model = new PhotoGalleryModel();
     private final MutableLiveData<List<Photo>> itemsListPhotos = new MutableLiveData<>();
@@ -34,9 +36,9 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
         return itemsListPhotos;
     }
 
-    public void loadListPhoto() {
+    private void loadListPhoto() {
         File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
-        if (listPhotos.isEmpty()) listPhotos.addAll(model.getListPhotos(root));
+        listPhotos.addAll(model.getListPhotos(root));
         itemsListPhotos.setValue(listPhotos);
     }
 

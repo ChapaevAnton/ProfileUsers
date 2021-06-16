@@ -25,12 +25,12 @@ public class PhotoGalleryFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         viewModel = new ViewModelProvider(this).get(PhotoGalleryViewModel.class);
+
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel.loadListPhoto();
         photoGalleryAdapter = new PhotoGalleryAdapter();
     }
 

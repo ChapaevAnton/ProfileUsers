@@ -16,7 +16,7 @@ public class Utils {
 
     @BindingAdapter({"app:loadImageGallery"})
     public static void loadImage(ImageView imageView, String photo) {
-        Glide.with(imageView.getContext()).load(photo).into(imageView);
+        Glide.with(imageView.getContext()).load(photo).centerCrop().into(imageView);
     }
 
 }

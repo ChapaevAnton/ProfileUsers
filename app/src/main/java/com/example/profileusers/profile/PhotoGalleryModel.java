@@ -13,6 +13,7 @@ public class PhotoGalleryModel {
         for (File file : searchFilesPaths(root)) {
             listPhotos.add(new Photo(file.getAbsolutePath()));
         }
+        Log.d("TEST", String.valueOf(listPhotos.size()));
         return listPhotos;
     }
 
@@ -26,8 +27,8 @@ public class PhotoGalleryModel {
                         fileList.addAll(searchFilesPaths(file));
                     } else {
                         if (file.getName().toLowerCase().endsWith(".jpg")
-                                || file.getName().toLowerCase().endsWith(".jpg")
                                 || file.getName().toLowerCase().endsWith(".jpeg")
+                                || file.getName().toLowerCase().endsWith(".png")
                                 || file.getName().toLowerCase().endsWith(".gif")
                                 || file.getName().toLowerCase().endsWith(".bmp")
                                 || file.getName().toLowerCase().endsWith(".webp")) {
