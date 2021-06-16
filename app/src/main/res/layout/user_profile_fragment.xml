@@ -8,7 +8,7 @@
         <import type="android.view.View" />
 
         <variable
-            name="userprofile"
+            name="viewModel"
             type="com.example.profileusers.profile.UserProfileViewModel" />
 
     </data>
@@ -30,14 +30,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:loadImage="@{userprofile.photo}" />
+            app:loadImage="@{viewModel.photo}" />
 
         <Button
             android:id="@+id/select_photo_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:onClick="@{()->userprofile.onSelectPhotoClicked()}"
+            android:onClick="@{()->viewModel.onSelectPhotoClicked()}"
             android:text="@string/select_user_photo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:onClick="@{()->userprofile.onSelectPhotoGalleryClicked()}"
+            android:onClick="@{()->viewModel.onSelectPhotoGalleryClicked()}"
             android:text="@string/select_photo_gallery"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -2,6 +2,7 @@ package com.example.profileusers.profile;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.profileusers.R;
 import com.example.profileusers.databinding.PhotoGalleryFragmentBinding;
 
-public class PhotoGalleryFragment extends Fragment {
+public class PhotoGalleryFragment extends Fragment implements PhotoClickListener {
 
     private PhotoGalleryFragmentBinding binding;
     private PhotoGalleryViewModel viewModel;
@@ -31,7 +32,8 @@ public class PhotoGalleryFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        photoGalleryAdapter = new PhotoGalleryAdapter();
+        photoGalleryAdapter = new PhotoGalleryAdapter(this);
+        viewModel.setPhotoClickListener(this);
     }
 
 
@@ -40,7 +42,7 @@ public class PhotoGalleryFragment extends Fragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.photo_gallery_fragment, container, false);
         binding.setLifecycleOwner(getViewLifecycleOwner());
-        binding.setUserprofile(viewModel);
+        binding.setViewModel(viewModel);
         return binding.getRoot();
 
     }
@@ -54,6 +56,13 @@ public class PhotoGalleryFragment extends Fragment {
         viewModel.getItemsListPhotos().observe(getViewLifecycleOwner(), listPhoto -> {
             photoGalleryAdapter.setItems(listPhoto);
         });
+
+    }
+
+    @Override
+    public void onPhotoItemClick(Photo photo) {
+        // TODO: 16.06.2021
+        Log.d("TEST", "onPhotoItemClick: " + photo.getPhotoFilePath());
 
     }
 }

@@ -8,7 +8,7 @@
         <import type="android.view.View" />
 
         <variable
-            name="userprofile"
+            name="viewModel"
             type="com.example.profileusers.profile.PhotoGalleryViewModel" />
 
     </data>

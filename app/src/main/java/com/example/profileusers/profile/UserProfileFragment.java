@@ -81,7 +81,7 @@ public class UserProfileFragment extends Fragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.user_profile_fragment, container, false);
         binding.setLifecycleOwner(getViewLifecycleOwner());
-        binding.setUserprofile(viewModel);
+        binding.setViewModel(viewModel);
         return binding.getRoot();
 
     }

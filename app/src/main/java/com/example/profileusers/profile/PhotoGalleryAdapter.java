@@ -15,7 +15,13 @@ import java.util.List;
 
 public class PhotoGalleryAdapter extends RecyclerView.Adapter<PhotoGalleryAdapter.PhotoGalleryHolder> {
 
+
     private List<Photo> listPhoto = new ArrayList<>();
+    final PhotoClickListener photoClickListener;
+
+    public PhotoGalleryAdapter(PhotoClickListener photoClickListener) {
+        this.photoClickListener = photoClickListener;
+    }
 
     public void setItems(List<Photo> listPhoto) {
         this.listPhoto = listPhoto;
@@ -33,7 +39,7 @@ public class PhotoGalleryAdapter extends RecyclerView.Adapter<PhotoGalleryAdapte
 
     @Override
     public void onBindViewHolder(@NonNull PhotoGalleryAdapter.PhotoGalleryHolder holder, int position) {
-        holder.bind(listPhoto.get(position));
+        holder.bind(listPhoto.get(position),photoClickListener);
     }
 
     @Override
@@ -51,8 +57,9 @@ public class PhotoGalleryAdapter extends RecyclerView.Adapter<PhotoGalleryAdapte
             this.binding = binding;
         }
 
-        public void bind(Photo photo) {
-            binding.setUserprofile(photo);
+        public void bind(Photo photo, PhotoClickListener photoClickListener) {
+            binding.setPhoto(photo);
+            binding.setClickListener(photoClickListener);
         }
     }
 
