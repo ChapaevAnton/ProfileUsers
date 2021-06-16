@@ -33,7 +33,6 @@ public class PhotoGalleryFragment extends Fragment implements PhotoClickListener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         photoGalleryAdapter = new PhotoGalleryAdapter(this);
-        viewModel.setPhotoClickListener(this);
     }
 
 

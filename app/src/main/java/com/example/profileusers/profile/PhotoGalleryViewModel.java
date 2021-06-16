@@ -20,36 +20,17 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
         loadListPhoto();
     }
 
-
     private final PhotoGalleryModel model = new PhotoGalleryModel();
     private final MutableLiveData<List<Photo>> itemsListPhotos = new MutableLiveData<>();
-
-    private final MutableLiveData<Photo> itemPhoto = new MutableLiveData<>();
     private final List<Photo> listPhotos = new ArrayList<>();
-    private PhotoClickListener photoClickListener;
 
-//    Photo[] photos = {
-//            new Photo(R.drawable.image_item),
-//            new Photo(R.drawable.image_item),
-//            new Photo(R.drawable.image_item),
-//            new Photo(R.drawable.image_item),
-//            new Photo(R.drawable.image_item),
-//            new Photo(R.drawable.image_item)};
 
     public LiveData<List<Photo>> getItemsListPhotos() {
         return itemsListPhotos;
     }
 
-    public LiveData<Photo> getItemPhoto() {
-        return itemPhoto;
-    }
+    public void onPhotoItemClicked() {
 
-    public void setPhotoClickListener(PhotoClickListener photoClickListener) {
-        this.photoClickListener = photoClickListener;
-    }
-
-    public void onPhotoItemClicked(Photo photo) {
-        photoClickListener.onPhotoItemClick(photo);
     }
 
     private void loadListPhoto() {
