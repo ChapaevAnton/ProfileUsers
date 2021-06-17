@@ -57,7 +57,7 @@ public class PhotoGalleryFragment extends Fragment implements PhotoClickListener
         });
 
         viewModel.getResultEventPhotoGallery().observe(getViewLifecycleOwner(), event -> {
-            requireActivity().getSupportFragmentManager().setFragmentResult(UserProfileFragment.PHOTO_TRANSFER, event.getContent());
+            requireActivity().getSupportFragmentManager().setFragmentResult(UserProfileFragment.PHOTO_FILE_PATH_REQUEST, event.getContent());
             requireActivity().onBackPressed();
         });
 

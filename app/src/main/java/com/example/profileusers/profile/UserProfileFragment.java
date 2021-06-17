@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -27,7 +25,7 @@ import com.example.profileusers.databinding.UserProfileFragmentBinding;
 
 public class UserProfileFragment extends Fragment {
 
-    public static final String PHOTO_TRANSFER = "photo_transfer";
+    public static final String PHOTO_FILE_PATH_REQUEST = "photo_file_path";
     private String photoPath;
     private ActivityResultLauncher<Intent> someActivityResultLauncher;
     private ActivityResultLauncher<String> mPermissionResult;
@@ -35,7 +33,6 @@ public class UserProfileFragment extends Fragment {
     private UserProfileFragmentBinding binding;
     //передать ссылку на ViewModel
     private UserProfileViewModel viewModel;
-
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -49,35 +46,27 @@ public class UserProfileFragment extends Fragment {
 
         getResultFragmentPhotoGallery();
 
-
         someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            Intent data = result.getData();
-                            if (data != null)
-                                viewModel.setPhotoUri(data.getData());
-                        }
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null)
+                            viewModel.setPhotoUri(data.getData());
                     }
                 });
 
         mPermissionResult = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
-                new ActivityResultCallback<Boolean>() {
-                    @Override
-                    public void onActivityResult(Boolean result) {
+                result -> {
 
-                        if (result) {
-                            Log.d("TEST", "Permission granted...!");
-                        } else {
-                            Log.d("TEST", "Permission denied...!");
-                        }
+                    if (result) {
+                        Log.d("TEST", "Permission granted...!");
+                    } else {
+                        Log.d("TEST", "Permission denied...!");
                     }
                 });
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -114,11 +103,11 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void getResultFragmentPhotoGallery() {
-        requireActivity().getSupportFragmentManager().setFragmentResultListener(PHOTO_TRANSFER, this, new FragmentResultListener() {
+        requireActivity().getSupportFragmentManager().setFragmentResultListener(PHOTO_FILE_PATH_REQUEST, this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                photoPath = result.getString(PHOTO_TRANSFER);
-                Log.d("TEST", "PHOTO_TRANSFER received result:" + photoPath);
+                photoPath = result.getString(PHOTO_FILE_PATH_REQUEST);
+                Log.d("TEST", "PHOTO_FILE_PATH_REQUEST:" + photoPath);
                 viewModel.setPhotoPathString(photoPath);
             }
         });
@@ -130,6 +119,5 @@ public class UserProfileFragment extends Fragment {
         //альтернативный вариант
         mPermissionResult.launch(Manifest.permission.READ_EXTERNAL_STORAGE, null);
     }
-
 
 }

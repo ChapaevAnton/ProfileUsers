@@ -36,7 +36,7 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
 
     public void setResultEventPhotoGallery(Photo photo) {
         Bundle result = new Bundle();
-        result.putString(UserProfileFragment.PHOTO_TRANSFER, photo.getPhotoFilePath());
+        result.putString(UserProfileFragment.PHOTO_FILE_PATH_REQUEST, photo.getPhotoFilePath());
         ResultEventPhotoGallery.setValue(new Event(result));
 
     }
