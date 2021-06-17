@@ -15,3 +15,11 @@ https://stackoverflow.com/questions/30777023/displaying-all-images-from-device-i
 https://developer.android.com/training/data-storage/shared/media
 
 https://developer.android.com/guide/fragments/communicate
+
+
+Image Cropper library
+
+https://github.com/burhanrashid52/PhotoEditor
+https://github.com/iamutkarshtiwari/Ananas
+https://github.com/ArthurHub/Android-Image-Cropper
+
