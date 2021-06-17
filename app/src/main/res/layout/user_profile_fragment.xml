@@ -30,7 +30,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:loadImage="@{viewModel.photo}" />
+            app:loadImageGallery="@{viewModel.photoPathString}"/>
 
         <Button
             android:id="@+id/select_photo_button"

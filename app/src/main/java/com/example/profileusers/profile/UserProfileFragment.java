@@ -27,7 +27,8 @@ import com.example.profileusers.databinding.UserProfileFragmentBinding;
 
 public class UserProfileFragment extends Fragment {
 
-    private static final String PHOTO_TRANSFER = "photo_transfer";
+    public static final String PHOTO_TRANSFER = "photo_transfer";
+    private String photoPath;
     private ActivityResultLauncher<Intent> someActivityResultLauncher;
     private ActivityResultLauncher<String> mPermissionResult;
 
@@ -45,12 +46,8 @@ public class UserProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         getChildFragmentManager().setFragmentResultListener(PHOTO_TRANSFER, this, new FragmentResultListener() {
-             @Override
-             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                String photoPath = result.getString(PHOTO_TRANSFER);
-             }
-         });
+
+        getResultFragmentPhotoGallery();
 
 
         someActivityResultLauncher = registerForActivityResult(
@@ -59,10 +56,9 @@ public class UserProfileFragment extends Fragment {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == Activity.RESULT_OK) {
-                            // There are no request codes
                             Intent data = result.getData();
                             if (data != null)
-                                viewModel.loadInImageView(data.getData());
+                                viewModel.setPhotoUri(data.getData());
                         }
                     }
                 });
@@ -75,10 +71,8 @@ public class UserProfileFragment extends Fragment {
 
                         if (result) {
                             Log.d("TEST", "Permission granted...!");
-                            //Toast.makeText(getContext(), "Permission granted...!", Toast.LENGTH_SHORT).show();
                         } else {
                             Log.d("TEST", "Permission denied...!");
-                            //Toast.makeText(getContext(), "Permission denied...!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -95,12 +89,11 @@ public class UserProfileFragment extends Fragment {
 
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel.getSelectPhoto().observe(getViewLifecycleOwner(), event -> {
-            if (event.isHandled()) selectPhoto();
+        viewModel.getShowStandardPhotoGallery().observe(getViewLifecycleOwner(), event -> {
+            if (event.isHandled()) showStandardGallery();
         });
 
         viewModel.getShowPermission().observe(getViewLifecycleOwner(), event -> {
@@ -113,14 +106,23 @@ public class UserProfileFragment extends Fragment {
 
     }
 
-
-    private void selectPhoto() {
+    private void showStandardGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         someActivityResultLauncher.launch(intent);
 
     }
 
+    private void getResultFragmentPhotoGallery() {
+        requireActivity().getSupportFragmentManager().setFragmentResultListener(PHOTO_TRANSFER, this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                photoPath = result.getString(PHOTO_TRANSFER);
+                Log.d("TEST", "PHOTO_TRANSFER received result:" + photoPath);
+                viewModel.setPhotoPathString(photoPath);
+            }
+        });
+    }
 
     private void showPermission() {
         //String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};

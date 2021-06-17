@@ -1,6 +1,7 @@
 package com.example.profileusers.profile;
 
 import android.app.Application;
+import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 
@@ -17,27 +18,40 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
 
     public PhotoGalleryViewModel(@NonNull Application application) {
         super(application);
-        loadListPhoto();
+        loadListPhotoGallery();
     }
 
     private final PhotoGalleryModel model = new PhotoGalleryModel();
-    private final MutableLiveData<List<Photo>> itemsListPhotos = new MutableLiveData<>();
+    private final MutableLiveData<List<Photo>> listPhotosGallery = new MutableLiveData<>();
     private final List<Photo> listPhotos = new ArrayList<>();
+    private final MutableLiveData<Event> ResultEventPhotoGallery = new MutableLiveData<>();
 
-
-    public LiveData<List<Photo>> getItemsListPhotos() {
-        return itemsListPhotos;
+    public LiveData<List<Photo>> getListPhotosGallery() {
+        return listPhotosGallery;
     }
 
-    public void onPhotoItemClicked() {
+    public LiveData<Event> getResultEventPhotoGallery() {
+        return ResultEventPhotoGallery;
+    }
+
+    public void setResultEventPhotoGallery(Photo photo) {
+        Bundle result = new Bundle();
+        result.putString(UserProfileFragment.PHOTO_TRANSFER, photo.getPhotoFilePath());
+        ResultEventPhotoGallery.setValue(new Event(result));
 
     }
 
-    private void loadListPhoto() {
-        File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
-        Log.d("TEST", root.getAbsolutePath());
-        listPhotos.addAll(model.getListPhotos(root));
-        itemsListPhotos.setValue(listPhotos);
+    private void loadListPhotoGallery() {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+            Log.d("TEST", "MEDIA_MOUNTED: OK");
+            Log.d("TEST", root.getAbsolutePath());
+            listPhotos.addAll(model.getListPhotos(root));
+            listPhotosGallery.setValue(listPhotos);
+        } else {
+            Log.d("TEST", "MEDIA_MOUNTED: ERR");
+        }
+
     }
 
 }

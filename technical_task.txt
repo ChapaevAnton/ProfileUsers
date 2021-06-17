@@ -1,9 +1,10 @@
 +1. Открытие фрагмента
 +2. Заполнить RecyclerView - holder,adapter,viewmodel+ 
 (пока загружаеться из drawable|)
-3. Поиск изображений в internal storage - model
-4. Загрузка найденных изображений в RecyclerView
-5. Передача выбранного изображения во ViewImage
++3. Поиск изображений в internal storage - model
++4. Загрузка найденных изображений в RecyclerView
++5. Передача выбранного изображения во ViewImage
+6. Редактирование выбранного изображения после вставки
 
 
 Guides

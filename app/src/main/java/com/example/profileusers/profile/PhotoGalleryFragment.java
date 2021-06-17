@@ -52,16 +52,22 @@ public class PhotoGalleryFragment extends Fragment implements PhotoClickListener
 
         binding.photoRecyclerView.setAdapter(photoGalleryAdapter);
 
-        viewModel.getItemsListPhotos().observe(getViewLifecycleOwner(), listPhoto -> {
+        viewModel.getListPhotosGallery().observe(getViewLifecycleOwner(), listPhoto -> {
             photoGalleryAdapter.setItems(listPhoto);
         });
+
+        viewModel.getResultEventPhotoGallery().observe(getViewLifecycleOwner(), event -> {
+            requireActivity().getSupportFragmentManager().setFragmentResult(UserProfileFragment.PHOTO_TRANSFER, event.getContent());
+            requireActivity().onBackPressed();
+        });
+
 
     }
 
     @Override
     public void onPhotoItemClick(Photo photo) {
         // TODO: 16.06.2021
+        viewModel.setResultEventPhotoGallery(photo);
         Log.d("TEST", "onPhotoItemClick: " + photo.getPhotoFilePath());
-
     }
 }

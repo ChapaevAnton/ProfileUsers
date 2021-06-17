@@ -13,30 +13,47 @@ import androidx.lifecycle.MutableLiveData;
 
 public class UserProfileViewModel extends AndroidViewModel {
 
-    private final MutableLiveData<Event> selectPhoto = new MutableLiveData<>();
+    private final MutableLiveData<Event> showStandardPhotoGallery = new MutableLiveData<>();
     private final MutableLiveData<Event> showPermission = new MutableLiveData<>();
-    private final MutableLiveData<Uri> photo = new MutableLiveData<>();
     private final MutableLiveData<Event> showPhotoGallery = new MutableLiveData<>();
+    private final MutableLiveData<Uri> photoUri = new MutableLiveData<>();
+    private final MutableLiveData<String> photoPathString = new MutableLiveData<>();
+
 
     //галерея фотографий
     public LiveData<Event> getShowPhotoGallery() {
         return showPhotoGallery;
     }
 
-    //фотография
-    public LiveData<Uri> getPhoto() {
-        return photo;
+    //стандартная галерея фотографий
+    public LiveData<Event> getShowStandardPhotoGallery() {
+        return showStandardPhotoGallery;
     }
 
+    //фотография path
+    public LiveData<String> getPhotoPathString() {
+        return photoPathString;
+    }
+    public void setPhotoPathString(String photoPath){
+        photoPathString.setValue(photoPath);
+    }
 
+    //фотография Uri
+    public LiveData<Uri> getPhotoUri() {
+        return photoUri;
+    }
+
+    public void setPhotoUri(Uri uriPhoto) {
+        photoUri.setValue(uriPhoto);
+    }
+
+    //разрешение
     public LiveData<Event> getShowPermission() {
         return showPermission;
     }
 
 
-    public LiveData<Event> getSelectPhoto() {
-        return selectPhoto;
-    }
+
 
     public UserProfileViewModel(Application application) {
         super(application);
@@ -44,12 +61,10 @@ public class UserProfileViewModel extends AndroidViewModel {
 
 
     public void onSelectPhotoClicked() {
-        //TODO
         if (isPermission())
-            selectPhoto.setValue(new Event(new Bundle()));
+            showStandardPhotoGallery.setValue(new Event(new Bundle()));
         else
             showPermission.setValue(new Event(new Bundle()));
-
     }
 
     public void onSelectPhotoGalleryClicked() {
@@ -60,16 +75,10 @@ public class UserProfileViewModel extends AndroidViewModel {
     }
 
 
-    public void loadInImageView(Uri uriPhoto) {
-        photo.setValue(uriPhoto);
-    }
-
     private boolean isPermission() {
-
         return ActivityCompat.checkSelfPermission(
                 getApplication(), Manifest.permission.READ_EXTERNAL_STORAGE
         ) != PackageManager.PERMISSION_DENIED;
     }
-
 
 }
