@@ -1,4 +1,4 @@
-package com.example.profileusers.profile;
+package com.example.profileusers.profile.utils;
 
 import android.os.Bundle;
 

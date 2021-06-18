@@ -1,4 +1,4 @@
-package com.example.profileusers.profile;
+package com.example.profileusers.profile.photogallery;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

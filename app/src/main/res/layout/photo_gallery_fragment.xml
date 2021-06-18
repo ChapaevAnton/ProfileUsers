@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.profileusers.profile.PhotoGalleryViewModel" />
+            type="com.example.profileusers.profile.photogallery.PhotoGalleryViewModel" />
 
     </data>
 

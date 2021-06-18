@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/photoGalleryFragment"
-        android:name="com.example.profileusers.profile.PhotoGalleryFragment"
+        android:name="com.example.profileusers.profile.photogallery.PhotoGalleryFragment"
         android:label="PhotoGalleryFragment"
         tools:layout="@layout/photo_gallery_fragment"/>
 </navigation>

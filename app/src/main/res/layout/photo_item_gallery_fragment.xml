@@ -6,15 +6,15 @@
 
         <variable
             name="photo"
-            type="com.example.profileusers.profile.Photo" />
+            type="com.example.profileusers.profile.photogallery.Photo" />
 
         <variable
             name="viewModel"
-            type="com.example.profileusers.profile.PhotoGalleryViewModel" />
+            type="com.example.profileusers.profile.photogallery.PhotoGalleryViewModel" />
 
         <variable
             name="clickListener"
-            type="com.example.profileusers.profile.PhotoClickListener" />
+            type="com.example.profileusers.profile.photogallery.PhotoClickListener" />
 
     </data>
 

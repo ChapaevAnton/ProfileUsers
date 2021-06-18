@@ -1,4 +1,4 @@
-package com.example.profileusers.profile;
+package com.example.profileusers.profile.photogallery;
 
 import android.app.Application;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.example.profileusers.profile.UserProfileFragment;
+import com.example.profileusers.profile.utils.Event;
 
 import java.io.File;
 import java.util.ArrayList;

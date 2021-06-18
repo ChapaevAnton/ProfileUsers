@@ -1,4 +1,4 @@
-package com.example.profileusers.profile;
+package com.example.profileusers.profile.photogallery;
 
 public class Photo {
 

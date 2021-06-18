@@ -1,9 +1,7 @@
 package com.example.profileusers.profile;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +25,6 @@ public class UserProfileFragment extends Fragment {
 
     public static final String PHOTO_FILE_PATH_REQUEST = "photo_file_path";
     private String photoPath;
-    private ActivityResultLauncher<Intent> someActivityResultLauncher;
     private ActivityResultLauncher<String> mPermissionResult;
 
     private UserProfileFragmentBinding binding;
@@ -45,16 +42,6 @@ public class UserProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         getResultFragmentPhotoGallery();
-
-        someActivityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        if (data != null)
-                            viewModel.setPhotoUri(data.getData());
-                    }
-                });
 
         mPermissionResult = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
@@ -81,9 +68,6 @@ public class UserProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel.getShowStandardPhotoGallery().observe(getViewLifecycleOwner(), event -> {
-            if (event.isHandled()) showStandardGallery();
-        });
 
         viewModel.getShowPermission().observe(getViewLifecycleOwner(), event -> {
             if (event.isHandled()) showPermission();
@@ -92,13 +76,6 @@ public class UserProfileFragment extends Fragment {
         viewModel.getShowPhotoGallery().observe(getViewLifecycleOwner(), event -> {
             if (event.isHandled()) MainActivity.userProfileToPhotoGallery(requireActivity());
         });
-
-    }
-
-    private void showStandardGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        someActivityResultLauncher.launch(intent);
 
     }
 

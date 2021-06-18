@@ -1,4 +1,4 @@
-package com.example.profileusers.profile;
+package com.example.profileusers.profile.photogallery;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.profileusers.R;
 import com.example.profileusers.databinding.PhotoGalleryFragmentBinding;
+import com.example.profileusers.profile.UserProfileFragment;
 
 public class PhotoGalleryFragment extends Fragment implements PhotoClickListener {
 

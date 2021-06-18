@@ -11,9 +11,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.profileusers.profile.utils.Event;
+
 public class UserProfileViewModel extends AndroidViewModel {
 
-    private final MutableLiveData<Event> showStandardPhotoGallery = new MutableLiveData<>();
     private final MutableLiveData<Event> showPermission = new MutableLiveData<>();
     private final MutableLiveData<Event> showPhotoGallery = new MutableLiveData<>();
     private final MutableLiveData<Uri> photoUri = new MutableLiveData<>();
@@ -25,11 +26,6 @@ public class UserProfileViewModel extends AndroidViewModel {
         return showPhotoGallery;
     }
 
-    //стандартная галерея фотографий
-    public LiveData<Event> getShowStandardPhotoGallery() {
-        return showStandardPhotoGallery;
-    }
-
     //фотография path
     public LiveData<String> getPhotoPathString() {
         return photoPathString;
@@ -38,33 +34,13 @@ public class UserProfileViewModel extends AndroidViewModel {
         photoPathString.setValue(photoPath);
     }
 
-    //фотография Uri
-    public LiveData<Uri> getPhotoUri() {
-        return photoUri;
-    }
-
-    public void setPhotoUri(Uri uriPhoto) {
-        photoUri.setValue(uriPhoto);
-    }
-
     //разрешение
     public LiveData<Event> getShowPermission() {
         return showPermission;
     }
 
-
-
-
     public UserProfileViewModel(Application application) {
         super(application);
-    }
-
-
-    public void onSelectPhotoClicked() {
-        if (isPermission())
-            showStandardPhotoGallery.setValue(new Event(new Bundle()));
-        else
-            showPermission.setValue(new Event(new Bundle()));
     }
 
     public void onSelectPhotoGalleryClicked() {
@@ -73,7 +49,6 @@ public class UserProfileViewModel extends AndroidViewModel {
         else
             showPermission.setValue(new Event(new Bundle()));
     }
-
 
     private boolean isPermission() {
         return ActivityCompat.checkSelfPermission(
