@@ -23,4 +23,5 @@ Image Cropper library
 https://github.com/burhanrashid52/PhotoEditor
 https://github.com/iamutkarshtiwari/Ananas
 https://github.com/ArthurHub/Android-Image-Cropper
+https://github.com/igreenwood/SimpleCropView
 
