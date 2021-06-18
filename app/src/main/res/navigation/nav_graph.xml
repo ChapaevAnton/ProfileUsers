@@ -15,11 +15,20 @@
         <action
             android:id="@+id/action_userProfileFragment_to_photoGalleryFragment"
             app:destination="@id/photoGalleryFragment" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_CropImageFragment"
+            app:destination="@id/CropImageFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/photoGalleryFragment"
         android:name="com.example.profileusers.profile.photogallery.PhotoGalleryFragment"
         android:label="PhotoGalleryFragment"
-        tools:layout="@layout/photo_gallery_fragment"/>
+        tools:layout="@layout/photo_gallery_fragment" />
+
+    <fragment
+        android:id="@+id/CropImageFragment"
+        android:name="com.example.profileusers.profile.CroupImageFragment"
+        android:label="CropImageFragment"
+        tools:layout="@layout/croup_image_fragment"/>
 </navigation>

@@ -17,9 +17,13 @@ public class UserProfileViewModel extends AndroidViewModel {
 
     private final MutableLiveData<Event> showPermission = new MutableLiveData<>();
     private final MutableLiveData<Event> showPhotoGallery = new MutableLiveData<>();
-    private final MutableLiveData<Uri> photoUri = new MutableLiveData<>();
+    private final MutableLiveData<Event> showCropImage = new MutableLiveData<>();
     private final MutableLiveData<String> photoPathString = new MutableLiveData<>();
 
+    //обрезка фото
+    public LiveData<Event> getShowCropImage() {
+        return showCropImage;
+    }
 
     //галерея фотографий
     public LiveData<Event> getShowPhotoGallery() {
@@ -48,6 +52,10 @@ public class UserProfileViewModel extends AndroidViewModel {
             showPhotoGallery.setValue(new Event(new Bundle()));
         else
             showPermission.setValue(new Event(new Bundle()));
+    }
+
+    public void onCropImageClicked(){
+        showCropImage.setValue(new Event(new Bundle()));
     }
 
     private boolean isPermission() {
