@@ -83,7 +83,7 @@ public class UserProfileFragment extends Fragment {
         });
 
         viewModel.getShowCropImage().observe(getViewLifecycleOwner(), event -> {
-            if (event.isHandled()) startCropActivity();
+            if (event.isHandled()) MainActivity.userProfileToCropImage(requireActivity());
         });
 
     }
