@@ -2,7 +2,6 @@ package com.example.profileusers.profile;
 
 import android.Manifest;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,10 +20,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.profileusers.MainActivity;
 import com.example.profileusers.R;
 import com.example.profileusers.databinding.UserProfileFragmentBinding;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
-
-import java.io.File;
 
 public class UserProfileFragment extends Fragment {
 
@@ -82,10 +77,6 @@ public class UserProfileFragment extends Fragment {
             if (event.isHandled()) MainActivity.userProfileToPhotoGallery(requireActivity());
         });
 
-        viewModel.getShowCropImage().observe(getViewLifecycleOwner(), event -> {
-            if (event.isHandled()) MainActivity.userProfileToCropImage(requireActivity());
-        });
-
     }
 
     private void getResultFragmentPhotoGallery() {
@@ -104,19 +95,6 @@ public class UserProfileFragment extends Fragment {
         //ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_CODE);
         //альтернативный вариант
         mPermissionResult.launch(Manifest.permission.READ_EXTERNAL_STORAGE, null);
-    }
-
-
-    private void startCropActivity() {
-//        CropImage.activity()
-//                .setGuidelines(CropImageView.Guidelines.ON)
-//                .start(requireActivity());
-
-//        CropImage.activity()
-//                .start(requireContext(), this);
-
-        CropImage.activity(Uri.fromFile(new File(photoPath)))
-                .start(requireActivity());
     }
 
 }

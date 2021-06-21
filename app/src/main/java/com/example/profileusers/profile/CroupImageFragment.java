@@ -45,7 +45,7 @@ public class CroupImageFragment extends Fragment {
         Button croupButton = binding.croupButton;
         Button rotateButton = binding.rotateButton;
 
-        cropImageView.setImageUriAsync(Uri.fromFile(new File("/storage/emulated/0/DCIM/Camera/IMG_20210609_123219.jpg")));
+        cropImageView.setImageUriAsync(Uri.fromFile(new File("/storage/emulated/0/Download/TEMP/1612098568_71665.jpg")));
         cropImageView.setOnCropImageCompleteListener(new CropImageView.OnCropImageCompleteListener() {
             @Override
             public void onCropImageComplete(CropImageView view, CropImageView.CropResult result) {

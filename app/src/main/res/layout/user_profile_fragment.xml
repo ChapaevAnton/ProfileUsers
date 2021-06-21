@@ -43,16 +43,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/user_photo" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/crop_image"
-            android:onClick="@{()->viewModel.onCropImageClicked()}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/select_photo_gallery_button" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,5 +1,6 @@
 package com.example.profileusers.profile.photogallery;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.profileusers.MainActivity;
 import com.example.profileusers.R;
 import com.example.profileusers.databinding.PhotoGalleryFragmentBinding;
 import com.example.profileusers.profile.UserProfileFragment;
@@ -63,12 +65,29 @@ public class PhotoGalleryFragment extends Fragment implements PhotoClickListener
         });
 
 
+        viewModel.getShowCropImage().observe(getViewLifecycleOwner(), event -> {
+            if (event.isHandled()) MainActivity.photoGalleryToCropImage(requireActivity());
+        });
+
     }
 
     @Override
     public void onPhotoItemClick(Photo photo) {
         // TODO: 16.06.2021
-        viewModel.setResultEventPhotoGallery(photo);
         Log.d("TEST", "onPhotoItemClick: " + photo.getPhotoFilePath());
+        // TODO: 21.06.2021 open dialog
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setTitle("Редактировать фото?").setMessage("Вы можете предварительно отредактировать фото...");
+        builder.setPositiveButton("да", (dialog, which) -> {
+            viewModel.onCropImageClicked();
+        });
+        builder.setNegativeButton("нет", ((dialog, which) -> {
+            viewModel.setResultEventPhotoGallery(photo);
+        }));
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
 }

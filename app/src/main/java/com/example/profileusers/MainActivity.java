@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
                 .navigate(R.id.action_userProfileFragment_to_photoGalleryFragment, null, null);
     }
 
-    public static void userProfileToCropImage(Activity activity) {
+    public static void photoGalleryToCropImage(Activity activity) {
         Navigation.findNavController(activity, R.id.main_fragment_container)
-                .navigate(R.id.action_userProfileFragment_to_CropImageFragment, null, null);
+                .navigate(R.id.action_photoGalleryFragment_to_CropImageFragment, null, null);
     }
 
 }
