@@ -28,7 +28,7 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
     private final MutableLiveData<List<Photo>> listPhotosGallery = new MutableLiveData<>();
     private final List<Photo> listPhotos = new ArrayList<>();
     private final MutableLiveData<Event> ResultEventPhotoGallery = new MutableLiveData<>();
-    private final MutableLiveData<Event> showCropImage = new MutableLiveData<>();
+    private final MutableLiveData<Event> ResultEventCropImage = new MutableLiveData<>();
 
     public LiveData<List<Photo>> getListPhotosGallery() {
         return listPhotosGallery;
@@ -39,8 +39,8 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
     }
 
     //обрезка фото
-    public LiveData<Event> getShowCropImage() {
-        return showCropImage;
+    public LiveData<Event> getResultEventCropImage() {
+        return ResultEventCropImage;
     }
 
     public void setResultEventPhotoGallery(Photo photo) {
@@ -63,8 +63,10 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
 
     }
 
-    public void onCropImageClicked(){
-        showCropImage.setValue(new Event(new Bundle()));
+    public void setResultEventCroupImage(Photo photo){
+        Bundle result = new Bundle();
+        result.putString(UserProfileFragment.PHOTO_FILE_PATH_REQUEST,photo.getPhotoFilePath());
+        ResultEventCropImage.setValue(new Event(result));
     }
 
 }

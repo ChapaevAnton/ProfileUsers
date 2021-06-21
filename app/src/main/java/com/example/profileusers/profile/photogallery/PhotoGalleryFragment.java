@@ -60,13 +60,18 @@ public class PhotoGalleryFragment extends Fragment implements PhotoClickListener
         });
 
         viewModel.getResultEventPhotoGallery().observe(getViewLifecycleOwner(), event -> {
-            requireActivity().getSupportFragmentManager().setFragmentResult(UserProfileFragment.PHOTO_FILE_PATH_REQUEST, event.getContent());
-            requireActivity().onBackPressed();
+            if (event.isHandled()) {
+                requireActivity().getSupportFragmentManager().setFragmentResult(UserProfileFragment.PHOTO_FILE_PATH_REQUEST, event.getContent());
+                requireActivity().onBackPressed();
+            }
         });
 
 
-        viewModel.getShowCropImage().observe(getViewLifecycleOwner(), event -> {
-            if (event.isHandled()) MainActivity.photoGalleryToCropImage(requireActivity());
+        viewModel.getResultEventCropImage().observe(getViewLifecycleOwner(), event -> {
+            if (event.isHandled()) {
+                requireActivity().getSupportFragmentManager().setFragmentResult(UserProfileFragment.PHOTO_FILE_PATH_REQUEST, event.getContent());
+                MainActivity.photoGalleryToCropImage(requireActivity());
+            }
         });
 
     }
@@ -80,7 +85,7 @@ public class PhotoGalleryFragment extends Fragment implements PhotoClickListener
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         builder.setTitle("Редактировать фото?").setMessage("Вы можете предварительно отредактировать фото...");
         builder.setPositiveButton("да", (dialog, which) -> {
-            viewModel.onCropImageClicked();
+            viewModel.setResultEventCroupImage(photo);
         });
         builder.setNegativeButton("нет", ((dialog, which) -> {
             viewModel.setResultEventPhotoGallery(photo);
