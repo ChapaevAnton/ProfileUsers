@@ -32,3 +32,5 @@ https://github.com/iamutkarshtiwari/Ananas
 https://github.com/ArthurHub/Android-Image-Cropper
 https://github.com/igreenwood/SimpleCropView
 
+21.06.21
+https://developer.android.com/guide/navigation/navigation-pass-data

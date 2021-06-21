@@ -22,7 +22,7 @@
             android:id="@+id/croup_image_view"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            app:loadImageGalleryAsync="@{viewModel.photoPathString}"
+            app:loadImageGalleryAsync="@{viewModel.photoPathStringToCroup}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

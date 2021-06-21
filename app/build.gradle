@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: "androidx.navigation.safeargs"
 
 android {
     compileSdkVersion 30
@@ -44,5 +45,7 @@ dependencies {
 
     //Android Image Cropper
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+
+
 
 }

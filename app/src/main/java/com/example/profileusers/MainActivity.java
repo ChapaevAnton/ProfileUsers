@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.Navigation;
 
+import com.example.profileusers.profile.photogallery.PhotoGalleryFragmentDirections;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -22,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
                 .navigate(R.id.action_userProfileFragment_to_photoGalleryFragment, null, null);
     }
 
-    public static void photoGalleryToCropImage(Activity activity) {
+    public static void photoGalleryToCropImage(Activity activity, String photoPath) {
         Navigation.findNavController(activity, R.id.main_fragment_container)
-                .navigate(R.id.action_photoGalleryFragment_to_CropImageFragment, null, null);
+                .navigate(PhotoGalleryFragmentDirections.actionPhotoGalleryFragmentToCropImageFragment(photoPath));
     }
 
 }

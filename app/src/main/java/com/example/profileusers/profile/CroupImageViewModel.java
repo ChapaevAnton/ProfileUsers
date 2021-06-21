@@ -15,12 +15,12 @@ public class CroupImageViewModel extends AndroidViewModel {
     }
 
     //фотография path
-    private MutableLiveData<String> photoPathString = new MutableLiveData<>();
+    private MutableLiveData<String> photoPathStringToCroup = new MutableLiveData<>();
 
-    public LiveData<String> getPhotoPathString() {
-        return photoPathString;
+    public LiveData<String> getPhotoPathStringToCroup() {
+        return photoPathStringToCroup;
     }
-    public void setPhotoPathString(String photoPath){
-        photoPathString.setValue(photoPath);
+    public void setPhotoPathStringToCroup(String photoPath){
+        photoPathStringToCroup.setValue(photoPath);
     }
 }

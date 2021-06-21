@@ -85,7 +85,7 @@ public class UserProfileFragment extends Fragment {
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 photoPath = result.getString(PHOTO_FILE_PATH_REQUEST);
                 Log.d("TEST", "PHOTO_FILE_PATH_REQUEST PROFILE:" + photoPath);
-                viewModel.setPhotoPathString(photoPath);
+                viewModel.setPhotoPathStringToProfile(photoPath);
             }
         });
     }

@@ -17,7 +17,7 @@ public class UserProfileViewModel extends AndroidViewModel {
     private final MutableLiveData<Event> showPermission = new MutableLiveData<>();
     private final MutableLiveData<Event> showPhotoGallery = new MutableLiveData<>();
 
-    private final MutableLiveData<String> photoPathString = new MutableLiveData<>();
+    private final MutableLiveData<String> photoPathStringToProfile = new MutableLiveData<>();
 
     //галерея фотографий
     public LiveData<Event> getShowPhotoGallery() {
@@ -25,11 +25,11 @@ public class UserProfileViewModel extends AndroidViewModel {
     }
 
     //фотография path
-    public LiveData<String> getPhotoPathString() {
-        return photoPathString;
+    public LiveData<String> getPhotoPathStringToProfile() {
+        return photoPathStringToProfile;
     }
-    public void setPhotoPathString(String photoPath){
-        photoPathString.setValue(photoPath);
+    public void setPhotoPathStringToProfile(String photoPath){
+        photoPathStringToProfile.setValue(photoPath);
     }
 
     //разрешение
