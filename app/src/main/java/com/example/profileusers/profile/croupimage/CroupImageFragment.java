@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.profileusers.MainActivity;
 import com.example.profileusers.R;
 import com.example.profileusers.databinding.CroupImageFragmentBinding;
 
@@ -53,7 +54,9 @@ public class CroupImageFragment extends Fragment {
 
         viewModel.getResultEventCroupPhoto().observe(getViewLifecycleOwner(), event -> {
             if (event.isHandled()) {
+                // TODO: 22.06.2021 send path cropFile
                 croupPhoto();
+                MainActivity.croupImageToUserProfile(requireActivity());
             }
         });
 

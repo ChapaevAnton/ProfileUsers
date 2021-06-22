@@ -98,6 +98,7 @@ public class CroupImageViewModel extends AndroidViewModel {
                 } else {
                     Log.d("TEST", "writePhotoBitmapToSdCard: file already exists");
                 }
+                // TODO: 22.06.2021 path write file
                 Log.d("TEST", "writePhotoBitmapToSdCard: " + photoFile.getAbsolutePath());
             }
         });

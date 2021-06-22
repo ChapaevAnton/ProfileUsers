@@ -29,4 +29,9 @@ public class MainActivity extends AppCompatActivity {
                 .navigate(PhotoGalleryFragmentDirections.actionPhotoGalleryFragmentToCropImageFragment(photoPath));
     }
 
+    public static void croupImageToUserProfile(Activity activity){
+        Navigation.findNavController(activity,R.id.main_fragment_container)
+                .navigate(R.id.action_CropImageFragment_to_userProfileFragment,null,null);
+    }
+
 }
