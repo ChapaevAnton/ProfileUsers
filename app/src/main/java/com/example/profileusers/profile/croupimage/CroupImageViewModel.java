@@ -76,13 +76,14 @@ public class CroupImageViewModel extends AndroidViewModel {
 
         // TODO: 22.06.2021 write bitmap to sdcard
         Bundle result = new Bundle();
-        try {
-            String path = writePhotoBitmapToSdCard();
+       // try {
+            //String path = writePhotoBitmapToSdCard();
+            String path = "/storage/emulated/0/Download/1.jpg";
             Log.d("TEST", "writePhotoBitmapToSdCard(): " + path);
             result.putString(UserProfileFragment.PHOTO_FILE_PATH_CROUP_REQUEST, path);
-        } catch (ExecutionException | InterruptedException err) {
-            err.printStackTrace();
-        }
+       // } catch (ExecutionException | InterruptedException err) {
+      //      err.printStackTrace();
+      //  }
 
         resultEventCroupPhoto.setValue(new Event(result));
     }
