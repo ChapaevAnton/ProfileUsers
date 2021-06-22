@@ -27,26 +27,26 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
     private final PhotoGalleryModel model = new PhotoGalleryModel();
     private final MutableLiveData<List<Photo>> listPhotosGallery = new MutableLiveData<>();
     private final List<Photo> listPhotos = new ArrayList<>();
-    private final MutableLiveData<Event> ResultEventPhotoGallery = new MutableLiveData<>();
-    private final MutableLiveData<Event> ResultEventCropImage = new MutableLiveData<>();
+    private final MutableLiveData<Event> resultEventPhotoGallery = new MutableLiveData<>();
+    private final MutableLiveData<Event> resultEventCropImage = new MutableLiveData<>();
 
     public LiveData<List<Photo>> getListPhotosGallery() {
         return listPhotosGallery;
     }
 
     public LiveData<Event> getResultEventPhotoGallery() {
-        return ResultEventPhotoGallery;
+        return resultEventPhotoGallery;
     }
 
     //обрезка фото
     public LiveData<Event> getResultEventCropImage() {
-        return ResultEventCropImage;
+        return resultEventCropImage;
     }
 
     public void setResultEventPhotoGallery(Photo photo) {
         Bundle result = new Bundle();
         result.putString(UserProfileFragment.PHOTO_FILE_PATH_REQUEST, photo.getPhotoFilePath());
-        ResultEventPhotoGallery.setValue(new Event(result));
+        resultEventPhotoGallery.setValue(new Event(result));
 
     }
 
@@ -66,7 +66,7 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
     public void setResultEventCroupImage(Photo photo){
         Bundle result = new Bundle();
         result.putString(UserProfileFragment.PHOTO_FILE_PATH_REQUEST,photo.getPhotoFilePath());
-        ResultEventCropImage.setValue(new Event(result));
+        resultEventCropImage.setValue(new Event(result));
     }
 
 }

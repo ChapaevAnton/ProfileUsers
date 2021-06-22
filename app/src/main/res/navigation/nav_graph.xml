@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/CropImageFragment"
-        android:name="com.example.profileusers.profile.CroupImageFragment"
+        android:name="com.example.profileusers.profile.croupimage.CroupImageFragment"
         android:label="CropImageFragment"
         tools:layout="@layout/croup_image_fragment">
 
