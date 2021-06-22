@@ -11,6 +11,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.profileusers.profile.UserProfileFragment;
 import com.example.profileusers.profile.utils.Event;
 
 import java.io.File;
@@ -20,6 +21,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class CroupImageViewModel extends AndroidViewModel {
 
@@ -39,6 +45,7 @@ public class CroupImageViewModel extends AndroidViewModel {
     //фотография
     private Bitmap photoBitmapCroup;
 
+
     public LiveData<String> getPhotoPathStringToCroup() {
         return photoPathStringToCroup;
     }
@@ -55,6 +62,7 @@ public class CroupImageViewModel extends AndroidViewModel {
         return resultEventCroupPhoto;
     }
 
+
     public void setPhotoBitmapCroup(Bitmap photoBitmap) {
         photoBitmapCroup = photoBitmap;
     }
@@ -64,25 +72,36 @@ public class CroupImageViewModel extends AndroidViewModel {
         resultEventRotatePhoto.setValue(new Event(new Bundle()));
     }
 
-    public void onCroupPhotoClicked() {
+    public void setResultEventCroupPhoto() {
+
         // TODO: 22.06.2021 write bitmap to sdcard
-        writePhotoBitmapToSdCard();
-        resultEventCroupPhoto.setValue(new Event(new Bundle()));
+        Bundle result = new Bundle();
+        try {
+            String path = writePhotoBitmapToSdCard();
+            Log.d("TEST", "writePhotoBitmapToSdCard(): " + path);
+            result.putString(UserProfileFragment.PHOTO_FILE_PATH_CROUP_REQUEST, path);
+        } catch (ExecutionException | InterruptedException err) {
+            err.printStackTrace();
+        }
+
+        resultEventCroupPhoto.setValue(new Event(result));
     }
 
 
-    private void writePhotoBitmapToSdCard() {
+    private String writePhotoBitmapToSdCard() throws ExecutionException, InterruptedException {
 
-        Thread writePhoto = new Thread(() -> {
-            // TODO: 22.06.2021
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Callable<String> stringCallable = new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                File photoFile;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-                Log.d("TEST", "writePhotoBitmapToSdCard: " + photoPathStringToCroup.getValue());
-                String photoPathString = photoPathStringToCroup.getValue();
-                Path photoPath = Paths.get(photoPathString);
-                String photoFileName = getFileNoExtension(photoPath.getFileName().toString());
-                File photoFile = new File(photoPath.getParent().toString(), photoFileName + ".jpg");
-                if (!photoFile.exists()) {
+                    Log.d("TEST", "writePhotoBitmapToSdCard: " + photoPathStringToCroup.getValue());
+                    String photoPathString = photoPathStringToCroup.getValue();
+                    Path photoPath = Paths.get(photoPathString);
+                    String photoFileName = getFileNoExtension(photoPath.getFileName().toString());
+                    photoFile = new File(photoPath.getParent().toString(), photoFileName + ".jpg");
 
                     try (FileOutputStream writePhotoStream = new FileOutputStream(photoFile)) {
 
@@ -95,16 +114,48 @@ public class CroupImageViewModel extends AndroidViewModel {
                     } catch (IOException err) {
                         err.printStackTrace();
                     }
-                } else {
-                    Log.d("TEST", "writePhotoBitmapToSdCard: file already exists");
-                }
-                // TODO: 22.06.2021 path write file
-                Log.d("TEST", "writePhotoBitmapToSdCard: " + photoFile.getAbsolutePath());
+                    return photoFile.getAbsolutePath();
+                } else return null;
             }
-        });
+        };
 
-        writePhoto.start();
+
+        Future<String> result = executorService.submit(stringCallable);
+        return result.get();
     }
+
+//        Thread writePhoto = new Thread(() -> {
+//            // TODO: 22.06.2021
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//
+//                Log.d("TEST", "writePhotoBitmapToSdCard: " + photoPathStringToCroup.getValue());
+//                String photoPathString = photoPathStringToCroup.getValue();
+//                Path photoPath = Paths.get(photoPathString);
+//                String photoFileName = getFileNoExtension(photoPath.getFileName().toString());
+//                File photoFile = new File(photoPath.getParent().toString(), photoFileName + ".jpg");
+//                if (!photoFile.exists()) {
+//
+//                    try (FileOutputStream writePhotoStream = new FileOutputStream(photoFile)) {
+//
+//                        if (photoBitmapCroup.compress(Bitmap.CompressFormat.JPEG, 90, writePhotoStream)) {
+//                            Log.d("TEST", "writePhotoBitmapToSdCard: write file OK");
+//                            Log.d("TEST", "writePhotoBitmapToSdCard: " + photoFile.canRead());
+//
+//                        } else Log.d("TEST", "writePhotoBitmapToSdCard: write file ERR");
+//
+//                    } catch (IOException err) {
+//                        err.printStackTrace();
+//                    }
+//                } else {
+//                    Log.d("TEST", "writePhotoBitmapToSdCard: file already exists");
+//                }
+//                // TODO: 22.06.2021 path write file
+//
+//                Log.d("TEST", "writePhotoBitmapToSdCard: " + photoFile.getAbsolutePath());
+//            }
+//        });
+//        writePhoto.start();
+
 
     private String getFileNoExtension(String fileName) {
         String newFileName = null;
