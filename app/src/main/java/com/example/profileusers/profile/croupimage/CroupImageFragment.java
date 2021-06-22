@@ -88,6 +88,7 @@ public class CroupImageFragment extends Fragment {
 
     private void croupPhoto() {
         Log.d("TEST", "croupPhoto: croup");
+        viewModel.setPhotoBitmapCroup(binding.croupImageView.getCroppedImage());
     }
 
     private void rotatePhoto() {

@@ -95,6 +95,7 @@ public class UserProfileFragment extends Fragment {
         //ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_CODE);
         //альтернативный вариант
         mPermissionResult.launch(Manifest.permission.READ_EXTERNAL_STORAGE, null);
+        mPermissionResult.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE, null);
     }
 
 }

@@ -28,7 +28,8 @@ public class UserProfileViewModel extends AndroidViewModel {
     public LiveData<String> getPhotoPathStringToProfile() {
         return photoPathStringToProfile;
     }
-    public void setPhotoPathStringToProfile(String photoPath){
+
+    public void setPhotoPathStringToProfile(String photoPath) {
         photoPathStringToProfile.setValue(photoPath);
     }
 
@@ -51,6 +52,8 @@ public class UserProfileViewModel extends AndroidViewModel {
     private boolean isPermission() {
         return ActivityCompat.checkSelfPermission(
                 getApplication(), Manifest.permission.READ_EXTERNAL_STORAGE
+        ) != PackageManager.PERMISSION_DENIED && ActivityCompat.checkSelfPermission(
+                getApplication(), Manifest.permission.WRITE_EXTERNAL_STORAGE
         ) != PackageManager.PERMISSION_DENIED;
     }
 
