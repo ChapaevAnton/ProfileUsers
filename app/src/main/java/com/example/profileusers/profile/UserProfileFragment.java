@@ -25,7 +25,8 @@ public class UserProfileFragment extends Fragment {
 
     public static final String PHOTO_FILE_PATH_REQUEST = "photo_file_path";
     private String photoPath;
-    private ActivityResultLauncher<String> mPermissionResult;
+
+    private ActivityResultLauncher<String> mPermissionResultWriteExternal;
 
     private UserProfileFragmentBinding binding;
     //передать ссылку на ViewModel
@@ -43,14 +44,14 @@ public class UserProfileFragment extends Fragment {
 
         getResultFragmentPhotoGallery();
 
-        mPermissionResult = registerForActivityResult(
+        mPermissionResultWriteExternal = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
                 result -> {
 
                     if (result) {
-                        Log.d("TEST", "Permission granted...!");
+                        Log.d("TEST", "Permission write granted...!");
                     } else {
-                        Log.d("TEST", "Permission denied...!");
+                        Log.d("TEST", "Permission write denied...!");
                     }
                 });
     }
@@ -69,8 +70,8 @@ public class UserProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewModel.getShowPermission().observe(getViewLifecycleOwner(), event -> {
-            if (event.isHandled()) showPermission();
+        viewModel.getShowPermissionWrite().observe(getViewLifecycleOwner(), event -> {
+            if (event.isHandled()) showPermissionWrite();
         });
 
         viewModel.getShowPhotoGallery().observe(getViewLifecycleOwner(), event -> {
@@ -90,12 +91,8 @@ public class UserProfileFragment extends Fragment {
         });
     }
 
-    private void showPermission() {
-        //String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-        //ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_CODE);
-        //альтернативный вариант
-        mPermissionResult.launch(Manifest.permission.READ_EXTERNAL_STORAGE, null);
-        mPermissionResult.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE, null);
+    private void showPermissionWrite() {
+        mPermissionResultWriteExternal.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE, null);
     }
 
 }

@@ -14,10 +14,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.profileusers.profile.utils.Event;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -84,20 +82,23 @@ public class CroupImageViewModel extends AndroidViewModel {
                 Path photoPath = Paths.get(photoPathString);
                 String photoFileName = getFileNoExtension(photoPath.getFileName().toString());
                 File photoFile = new File(photoPath.getParent().toString(), photoFileName + ".jpg");
+                if (!photoFile.exists()) {
 
-                try (FileOutputStream writePhotoStream = new FileOutputStream(photoFile)) {
+                    try (FileOutputStream writePhotoStream = new FileOutputStream(photoFile)) {
 
-                    photoBitmapCroup.compress(Bitmap.CompressFormat.JPEG, 90, writePhotoStream);
+                        if (photoBitmapCroup.compress(Bitmap.CompressFormat.JPEG, 90, writePhotoStream)) {
+                            Log.d("TEST", "writePhotoBitmapToSdCard: write file OK");
+                            Log.d("TEST", "writePhotoBitmapToSdCard: " + photoFile.canRead());
 
-                } catch (IOException err) {
-                    err.printStackTrace();
+                        } else Log.d("TEST", "writePhotoBitmapToSdCard: write file ERR");
+
+                    } catch (IOException err) {
+                        err.printStackTrace();
+                    }
+                } else {
+                    Log.d("TEST", "writePhotoBitmapToSdCard: file already exists");
                 }
-
-                Log.d("TEST", "writePhotoBitmapToSdCard: " + photoPath.getFileName());
-                Log.d("TEST", "writePhotoBitmapToSdCard: " + photoPath.getParent());
                 Log.d("TEST", "writePhotoBitmapToSdCard: " + photoFile.getAbsolutePath());
-                Log.d("TEST", "writePhotoBitmapToSdCard: " + getFileNoExtension(photoPath.getFileName().toString()));
-
             }
         });
 
@@ -110,14 +111,11 @@ public class CroupImageViewModel extends AndroidViewModel {
             LocalDateTime localDateTime = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("_yyyyMMdd_HHmmss");
             localDateTime.format(formatter);
-
             int pos = fileName.lastIndexOf(".");
-
             if (pos == -1) newFileName = fileName;
             else
                 newFileName = fileName.substring(0, pos).toLowerCase() + localDateTime.format(formatter);
         }
-
         return newFileName;
     }
 

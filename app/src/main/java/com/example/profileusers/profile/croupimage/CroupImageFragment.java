@@ -33,7 +33,7 @@ public class CroupImageFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //      getResultFragmentPhotoGallery();
+
         args = CroupImageFragmentArgs.fromBundle(requireArguments());
         photoPath = args.getPhotoPath();
         viewModel.setPhotoPathStringToCroup(photoPath);
@@ -63,27 +63,7 @@ public class CroupImageFragment extends Fragment {
             }
         });
 
-//        croupButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                binding.resultImage.setImageBitmap(cropImageView.getCroppedImage());
-//
-//                Uri uri = cropImageView.getImageUri();
-//                String pathFile = cropImageView.getImageUri().getPath();
-//                Log.d("TEST", "onClick");
-//                Log.d("TEST URI", uri.toString());
-//                Log.d("TEST pathFile", pathFile);
-//
-//            }
-//        });
-//
-//        rotateButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                cropImageView.rotateImage(90);
-//            }
-//        });
-//
+
     }
 
     private void croupPhoto() {

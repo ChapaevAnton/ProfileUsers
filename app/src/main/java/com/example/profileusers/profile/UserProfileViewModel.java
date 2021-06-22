@@ -14,7 +14,7 @@ import com.example.profileusers.profile.utils.Event;
 
 public class UserProfileViewModel extends AndroidViewModel {
 
-    private final MutableLiveData<Event> showPermission = new MutableLiveData<>();
+    private final MutableLiveData<Event> showPermissionWrite = new MutableLiveData<>();
     private final MutableLiveData<Event> showPhotoGallery = new MutableLiveData<>();
 
     private final MutableLiveData<String> photoPathStringToProfile = new MutableLiveData<>();
@@ -34,8 +34,9 @@ public class UserProfileViewModel extends AndroidViewModel {
     }
 
     //разрешение
-    public LiveData<Event> getShowPermission() {
-        return showPermission;
+
+    public LiveData<Event> getShowPermissionWrite() {
+        return showPermissionWrite;
     }
 
     public UserProfileViewModel(Application application) {
@@ -43,16 +44,17 @@ public class UserProfileViewModel extends AndroidViewModel {
     }
 
     public void onSelectPhotoGalleryClicked() {
-        if (isPermission())
+
+        if (isPermissionWrite()) {
             showPhotoGallery.setValue(new Event(new Bundle()));
-        else
-            showPermission.setValue(new Event(new Bundle()));
+
+        } else showPermissionWrite.setValue(new Event(new Bundle()));
+
     }
 
-    private boolean isPermission() {
+
+    private boolean isPermissionWrite() {
         return ActivityCompat.checkSelfPermission(
-                getApplication(), Manifest.permission.READ_EXTERNAL_STORAGE
-        ) != PackageManager.PERMISSION_DENIED && ActivityCompat.checkSelfPermission(
                 getApplication(), Manifest.permission.WRITE_EXTERNAL_STORAGE
         ) != PackageManager.PERMISSION_DENIED;
     }
