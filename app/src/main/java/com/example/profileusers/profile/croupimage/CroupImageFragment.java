@@ -2,6 +2,7 @@ package com.example.profileusers.profile.croupimage;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +37,11 @@ public class CroupImageFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         args = CroupImageFragmentArgs.fromBundle(requireArguments());
-        photoPath = args.getPhotoPath();
-        viewModel.setPhotoPathStringToCroup(photoPath);
+        if (viewModel.getPhotoPathStringToCroup().getValue() == null) {
+            photoPath = args.getPhotoPath();
+            viewModel.setPhotoPathStringToCroup(photoPath);
+        }
+        Log.d("TEST", "onCreate: !!!!");
     }
 
     @Override
