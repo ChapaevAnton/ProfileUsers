@@ -69,7 +69,6 @@ public class PhotoGalleryFragment extends Fragment implements PhotoClickListener
 
         viewModel.getResultEventCropImage().observe(getViewLifecycleOwner(), event -> {
             if (event.isHandled()) {
-
                 MainActivity.photoGalleryToCropImage(
                         requireActivity(),
                         event.getContent().getString(UserProfileFragment.PHOTO_FILE_PATH_REQUEST)

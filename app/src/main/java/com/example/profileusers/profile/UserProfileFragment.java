@@ -24,9 +24,8 @@ import com.example.profileusers.databinding.UserProfileFragmentBinding;
 public class UserProfileFragment extends Fragment {
 
     public static final String PHOTO_FILE_PATH_REQUEST = "photo_file_path";
-    public static final String PHOTO_FILE_PATH_CROUP_REQUEST = "photo_file_croup_path";
+
     private String photoPath;
-    private String photoPathCroup;
 
     private ActivityResultLauncher<String> mPermissionResultWriteExternal;
 
@@ -45,7 +44,6 @@ public class UserProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         getResultFragmentPhotoGallery();
-        getResultFragmentCroupImage();
 
         mPermissionResultWriteExternal = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
@@ -94,16 +92,6 @@ public class UserProfileFragment extends Fragment {
         });
     }
 
-    private void getResultFragmentCroupImage(){
-        requireActivity().getSupportFragmentManager().setFragmentResultListener(PHOTO_FILE_PATH_CROUP_REQUEST, this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                photoPathCroup = result.getString(PHOTO_FILE_PATH_CROUP_REQUEST);
-                Log.d("TEST", "PHOTO_FILE_CROUP_PATH_REQUEST PROFILE:" + photoPathCroup);
-                viewModel.setPhotoPathStringToProfile(photoPathCroup);
-            }
-        });
-    }
 
     private void showPermissionWrite() {
         mPermissionResultWriteExternal.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE, null);
