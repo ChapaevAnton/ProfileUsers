@@ -80,7 +80,7 @@ public class PhotoGalleryFragment extends Fragment implements PhotoClickListener
     }
 
     @Override
-    public void onPhotoItemClick(Photo photo) {
+    public void onPhotoItemClicked(Photo photo) {
         // TODO: 16.06.2021
         Log.d("TEST", "onPhotoItemClick: " + photo.getPhotoFilePath());
         // TODO: 21.06.2021 open dialog

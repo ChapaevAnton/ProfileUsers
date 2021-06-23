@@ -1,5 +1,5 @@
 package com.example.profileusers.profile.photogallery;
 
 public interface PhotoClickListener {
-    void onPhotoItemClick(Photo photo);
+    void onPhotoItemClicked(Photo photo);
 }

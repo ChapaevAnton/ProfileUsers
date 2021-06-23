@@ -2,7 +2,6 @@ package com.example.profileusers.profile.croupimage;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.profileusers.MainActivity;
 import com.example.profileusers.R;
 import com.example.profileusers.databinding.CroupImageFragmentBinding;
+import com.example.profileusers.profile.UserProfileFragment;
 
 public class CroupImageFragment extends Fragment {
 
@@ -54,30 +54,20 @@ public class CroupImageFragment extends Fragment {
 
         viewModel.getResultEventCroupPhoto().observe(getViewLifecycleOwner(), event -> {
             if (event.isHandled()) {
-                // TODO: 22.06.2021 send path cropFile
-                croupPhoto();
+                requireActivity().getSupportFragmentManager().setFragmentResult(UserProfileFragment.PHOTO_FILE_PATH_REQUEST, event.getContent());
                 MainActivity.croupImageToUserProfile(requireActivity());
             }
         });
 
         viewModel.getResultEventRotatePhoto().observe(getViewLifecycleOwner(), event -> {
             if (event.isHandled()) {
-                rotatePhoto();
+                binding.croupImageView.rotateImage(90);
             }
         });
 
 
     }
 
-    private void croupPhoto() {
-        Log.d("TEST", "croupPhoto: croup");
-        viewModel.setPhotoBitmapCroup(binding.croupImageView.getCroppedImage());
-    }
-
-    private void rotatePhoto() {
-        Log.d("TEST", "rotatePhoto: rotate");
-        binding.croupImageView.rotateImage(90);
-    }
 
 }
 

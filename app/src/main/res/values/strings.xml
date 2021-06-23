@@ -8,4 +8,5 @@
     <string name="crop_image">crop image</string>
     <string name="croup">croup</string>
     <string name="rotate_button">rotate</string>
+    <string name="save_button">save</string>
 </resources>

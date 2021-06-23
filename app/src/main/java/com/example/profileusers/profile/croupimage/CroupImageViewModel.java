@@ -11,6 +11,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.profileusers.profile.UserProfileFragment;
 import com.example.profileusers.profile.utils.Event;
 
 import java.io.File;
@@ -20,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.Executors;
 
 public class CroupImageViewModel extends AndroidViewModel {
 
@@ -35,9 +37,6 @@ public class CroupImageViewModel extends AndroidViewModel {
 
     //фотография path
     private final MutableLiveData<String> photoPathStringToCroup = new MutableLiveData<>();
-
-    //фотография
-    private Bitmap photoBitmapCroup;
 
     public LiveData<String> getPhotoPathStringToCroup() {
         return photoPathStringToCroup;
@@ -55,62 +54,63 @@ public class CroupImageViewModel extends AndroidViewModel {
         return resultEventCroupPhoto;
     }
 
-    public void setPhotoBitmapCroup(Bitmap photoBitmap) {
-        photoBitmapCroup = photoBitmap;
-    }
-
-
     public void onRotatePhotoClicked() {
         resultEventRotatePhoto.setValue(new Event(new Bundle()));
     }
 
-    public void onCroupPhotoClicked() {
+    public void onCroupPhotoClicked(Bitmap photoBitmapCroup) {
         // TODO: 22.06.2021 write bitmap to sdcard
-        writePhotoBitmapToSdCard();
-        resultEventCroupPhoto.setValue(new Event(new Bundle()));
-    }
-
-
-    private void writePhotoBitmapToSdCard() {
-
-        Thread writePhoto = new Thread(() -> {
-            // TODO: 22.06.2021
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-                Log.d("TEST", "writePhotoBitmapToSdCard: " + photoPathStringToCroup.getValue());
-                String photoPathString = photoPathStringToCroup.getValue();
-                Path photoPath = Paths.get(photoPathString);
-                String photoFileName = getFileNoExtension(photoPath.getFileName().toString());
-                File photoFile = new File(photoPath.getParent().toString(), photoFileName + ".jpg");
-                if (!photoFile.exists()) {
-
-                    try (FileOutputStream writePhotoStream = new FileOutputStream(photoFile)) {
-
-                        if (photoBitmapCroup.compress(Bitmap.CompressFormat.JPEG, 90, writePhotoStream)) {
-                            Log.d("TEST", "writePhotoBitmapToSdCard: write file OK");
-                            Log.d("TEST", "writePhotoBitmapToSdCard: " + photoFile.canRead());
-
-                        } else Log.d("TEST", "writePhotoBitmapToSdCard: write file ERR");
-
-                    } catch (IOException err) {
-                        err.printStackTrace();
-                    }
-                } else {
-                    Log.d("TEST", "writePhotoBitmapToSdCard: file already exists");
-                }
-                // TODO: 22.06.2021 path write file
-                Log.d("TEST", "writePhotoBitmapToSdCard: " + photoFile.getAbsolutePath());
+        Executors.newSingleThreadExecutor().execute(() -> {
+            String photoPathCroup = writePhotoBitmapToSdCard(photoBitmapCroup);
+            if (photoPathCroup != null) {
+                photoPathStringToCroup.postValue(photoPathCroup);
             }
         });
 
-        writePhoto.start();
+    }
+
+    public void onSavePhotoClicked() {
+        Bundle result = new Bundle();
+        result.putString(UserProfileFragment.PHOTO_FILE_PATH_REQUEST, photoPathStringToCroup.getValue());
+        resultEventCroupPhoto.postValue(new Event(result));
+    }
+
+
+    private String writePhotoBitmapToSdCard(Bitmap photoBitmapCroup) {
+
+        String photoPathCroup = null;
+        // TODO: 22.06.2021
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            Log.d("TEST", "writePhotoBitmapToSdCard: " + photoPathStringToCroup.getValue());
+            String photoPathString = photoPathStringToCroup.getValue();
+            Path photoPath = Paths.get(photoPathString);
+            String photoFileName = getFileNoExtension(photoPath.getFileName().toString());
+            File photoFile = new File(photoPath.getParent().toString(), photoFileName + ".jpg");
+
+            try (FileOutputStream writePhotoStream = new FileOutputStream(photoFile)) {
+
+                if (photoBitmapCroup.compress(Bitmap.CompressFormat.JPEG, 90, writePhotoStream)) {
+                    Log.d("TEST", "writePhotoBitmapToSdCard: write file OK");
+                    Log.d("TEST", "writePhotoBitmapToSdCard: " + photoFile.canRead());
+                    // TODO: 22.06.2021 path write file
+                    Log.d("TEST", "writePhotoBitmapToSdCard: " + photoFile.getAbsolutePath());
+                    photoPathCroup = photoFile.getAbsolutePath();
+                } else Log.d("TEST", "writePhotoBitmapToSdCard: write file ERR");
+
+            } catch (IOException err) {
+                err.printStackTrace();
+            }
+
+        }
+        return photoPathCroup;
     }
 
     private String getFileNoExtension(String fileName) {
         String newFileName = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LocalDateTime localDateTime = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("_yyyyMMdd_HHmmss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("_yyyyMMdd_HH_mm_ss");
             localDateTime.format(formatter);
             int pos = fileName.lastIndexOf(".");
             if (pos == -1) newFileName = fileName;
