@@ -83,7 +83,7 @@ public class PhotoGalleryFragment extends Fragment implements PhotoClickListener
         // TODO: 16.06.2021
         Log.d("TEST", "onPhotoItemClick: " + photo.getPhotoFilePath());
         // TODO: 21.06.2021 open dialog
-
+        // TODO Переделать билдер
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         builder.setTitle("Редактировать фото?").setMessage("Вы можете предварительно отредактировать фото...");
         builder.setPositiveButton("да", (dialog, which) -> {

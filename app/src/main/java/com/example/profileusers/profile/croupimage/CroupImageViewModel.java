@@ -77,9 +77,10 @@ public class CroupImageViewModel extends AndroidViewModel {
 
 
     private String writePhotoBitmapToSdCard(Bitmap photoBitmapCroup) {
-
+        //TODO Никогда не возвращать NULl
         String photoPathCroup = null;
         // TODO: 22.06.2021
+        //TODO Лишняя вложенность
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             Log.d("TEST", "writePhotoBitmapToSdCard: " + photoPathStringToCroup.getValue());
@@ -105,8 +106,9 @@ public class CroupImageViewModel extends AndroidViewModel {
         }
         return photoPathCroup;
     }
-
+    //TODO SOLID Interrupt
     private String getFileNoExtension(String fileName) {
+        //TODO Сергей немчиенский смотрит на тебя с неодобрением
         String newFileName = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LocalDateTime localDateTime = LocalDateTime.now();

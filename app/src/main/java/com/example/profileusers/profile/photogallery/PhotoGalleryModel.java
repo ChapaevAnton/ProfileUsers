@@ -19,6 +19,8 @@ public class PhotoGalleryModel {
         return listPhotos;
     }
 
+
+    // TODO: 25.06.2021 убрат вложенность if, и предсумотреть что возвращать если else
     private ArrayList<File> searchFilesPaths(File root) {
         ArrayList<File> fileList = new ArrayList<>();
         if (root.isDirectory()) {
