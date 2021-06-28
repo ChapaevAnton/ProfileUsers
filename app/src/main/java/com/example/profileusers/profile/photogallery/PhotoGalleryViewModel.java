@@ -14,6 +14,7 @@ import com.example.profileusers.profile.UserProfileFragment;
 import com.example.profileusers.profile.utils.Event;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +56,11 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
             File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
             Log.d("TEST", "MEDIA_MOUNTED: OK");
             Log.d("TEST", root.getAbsolutePath());
-            listPhotos.addAll(model.getListPhotos(root));
+            try {
+                listPhotos.addAll(model.getListPhotos(root));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             listPhotosGallery.setValue(listPhotos);
         } else {
             Log.d("TEST", "MEDIA_MOUNTED: ERR");
@@ -63,9 +68,9 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
 
     }
 
-    public void setResultEventCroupImage(Photo photo){
+    public void setResultEventCroupImage(Photo photo) {
         Bundle result = new Bundle();
-        result.putString(UserProfileFragment.PHOTO_FILE_PATH_REQUEST,photo.getPhotoFilePath());
+        result.putString(UserProfileFragment.PHOTO_FILE_PATH_REQUEST, photo.getPhotoFilePath());
         resultEventCropImage.setValue(new Event(result));
     }
 

@@ -1,51 +1,93 @@
 package com.example.profileusers.profile.photogallery;
 
+import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PhotoGalleryModel {
 
     private final ArrayList<Photo> listPhotos = new ArrayList<>();
 
-    public ArrayList<Photo> getListPhotos(File root) {
+
+    public ArrayList<Photo> getListPhotos(@NonNull File root) throws IOException {
         Log.d("TEST", "searchFilesPaths: LOAD START ");
-        for (File file : searchFilesPaths(root)) {
-            listPhotos.add(new Photo(file.getAbsolutePath()));
+
+        List<File> listFiles;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Log.d("TEST", "searchFilesPathsApi26: RUN");
+            listFiles = searchFilesPathsApi26(root);
+
+        } else {
+            Log.d("TEST", "searchFilesPaths: RUN");
+            listFiles = searchFilesPaths(root);
         }
+
+
+        assert listFiles != null;
+        for (File file : listFiles) {
+            listPhotos.add(new Photo(file.getAbsolutePath()));
+            Log.d("TEST", file.getAbsolutePath());
+        }
+
         Log.d("TEST", "searchFilesPaths: LOAD STOP");
         Log.d("TEST", String.valueOf(listPhotos.size()));
+
         return listPhotos;
     }
 
 
-    // TODO: 25.06.2021 убрат вложенность if, и предсумотреть что возвращать если else
-    private ArrayList<File> searchFilesPaths(File root) {
+    //поиск файлов по фильтру для >= API26
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private List<File> searchFilesPathsApi26(@NonNull File path) throws IOException {
+
+        return Files.walk(path.toPath()).map(Path::toFile).filter(this::fileFiler).collect(Collectors.toList());
+
+    }
+
+    //поиск файлов по фильтру
+    private ArrayList<File> searchFilesPaths(@NonNull File root) {
+
         ArrayList<File> fileList = new ArrayList<>();
-        if (root.isDirectory()) {
-            File[] directoryFiles = root.listFiles();
-            if (directoryFiles != null) {
-                for (File file : directoryFiles) {
-                    if (file.isDirectory()) {
-                        fileList.addAll(searchFilesPaths(file));
-                    } else {
-                        if (file.getName().toLowerCase().endsWith(".jpg")
-                                || file.getName().toLowerCase().endsWith(".jpeg")
-                                || file.getName().toLowerCase().endsWith(".png")
-                                || file.getName().toLowerCase().endsWith(".gif")
-                                || file.getName().toLowerCase().endsWith(".bmp")
-                                || file.getName().toLowerCase().endsWith(".webp")) {
-                            fileList.add(file);
-                            Log.d("TEST", file.getAbsolutePath());
-                        }
-                    }
+
+        if (!root.isDirectory()) {
+            return fileList;
+        }
+
+        File[] directoryFiles = root.listFiles();
+
+        if (directoryFiles == null) {
+            return fileList;
+        }
+
+        for (File file : directoryFiles) {
+            if (file.isDirectory()) {
+                fileList.addAll(searchFilesPaths(file));
+            } else {
+                if (fileFiler(file)) {
+                    fileList.add(file);
                 }
             }
         }
-
         return fileList;
     }
 
+    private boolean fileFiler(@NonNull File file) {
+        return file.getName().toLowerCase().endsWith(".jpg")
+                || file.getName().toLowerCase().endsWith(".jpeg")
+                || file.getName().toLowerCase().endsWith(".png")
+                || file.getName().toLowerCase().endsWith(".gif")
+                || file.getName().toLowerCase().endsWith(".bmp")
+                || file.getName().toLowerCase().endsWith(".webp");
+    }
 
 }
