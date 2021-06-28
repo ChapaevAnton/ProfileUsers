@@ -22,6 +22,8 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
 
     public PhotoGalleryViewModel(@NonNull Application application) {
         super(application);
+        // QUESTION: 28.06.2021 #1 Когда открывается Fragment,
+        //  немного тормозит - как исправить?, сделать в отдельном потоке? или изменить место вызова?
         loadListPhotoGallery();
     }
 
