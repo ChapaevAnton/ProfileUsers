@@ -20,15 +20,15 @@ public class PhotoGalleryModel {
 
 
     public ArrayList<Photo> getListPhotos(@NonNull File root) throws IOException {
-        Log.d("TEST", "searchFilesPaths: LOAD START ");
+        Log.d("TEST", "searchFilesPaths: load start ");
 
         List<File> listFiles;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Log.d("TEST", "searchFilesPathsApi26: RUN");
+            Log.d("TEST", "searchFilesPathsApi26: run");
             listFiles = searchFilesPathsApi26(root);
 
         } else {
-            Log.d("TEST", "searchFilesPaths: RUN");
+            Log.d("TEST", "searchFilesPaths: run");
             listFiles = searchFilesPaths(root);
         }
 
@@ -39,7 +39,7 @@ public class PhotoGalleryModel {
             Log.d("TEST", file.getAbsolutePath());
         }
 
-        Log.d("TEST", "searchFilesPaths: LOAD STOP");
+        Log.d("TEST", "searchFilesPaths: load stop");
         Log.d("TEST", String.valueOf(listPhotos.size()));
 
         return listPhotos;
