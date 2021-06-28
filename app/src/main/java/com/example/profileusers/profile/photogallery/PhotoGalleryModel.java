@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 
 public class PhotoGalleryModel {
 
-    private final ArrayList<Photo> listPhotos = new ArrayList<>();
+    private final List<Photo> listPhotos = new ArrayList<>();
 
 
-    public ArrayList<Photo> getListPhotos(@NonNull File root) throws IOException {
+    public List<Photo> getListPhotos(@NonNull File root) throws IOException {
         Log.d("TEST", "searchFilesPaths: load start ");
 
         List<File> listFiles;
@@ -55,9 +55,9 @@ public class PhotoGalleryModel {
     }
 
     //поиск файлов по фильтру
-    private ArrayList<File> searchFilesPaths(@NonNull File root) {
+    private List<File> searchFilesPaths(@NonNull File root) {
 
-        ArrayList<File> fileList = new ArrayList<>();
+        List<File> fileList = new ArrayList<>();
 
         if (!root.isDirectory()) {
             return fileList;
