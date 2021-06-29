@@ -29,7 +29,7 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
 
     private final PhotoGalleryModel model = new PhotoGalleryModel();
     private final MutableLiveData<List<Photo>> listPhotosGallery = new MutableLiveData<>();
-    private final List<Photo> listPhotos = new ArrayList<>();
+    private List<Photo> listPhotos = new ArrayList<>();
     private final MutableLiveData<Event> resultEventPhotoGallery = new MutableLiveData<>();
     private final MutableLiveData<Event> resultEventCropImage = new MutableLiveData<>();
 
@@ -59,7 +59,7 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
             Log.d("TEST", "MEDIA_MOUNTED: OK");
             Log.d("TEST", root.getAbsolutePath());
             try {
-                listPhotos.addAll(model.getListPhotos(root));
+                listPhotos = model.getListPhotos(root);
             } catch (IOException e) {
                 e.printStackTrace();
             }
