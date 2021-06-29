@@ -18,22 +18,20 @@ public class PhotoGalleryModel {
 
     private final List<Photo> listPhotos = new ArrayList<>();
 
-
     public List<Photo> getListPhotos(@NonNull File root) throws IOException {
         Log.d("TEST", "searchFilesPaths: load start ");
 
         List<File> listFiles;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Log.d("TEST", "searchFilesPathsApi26: run");
-            listFiles = searchFilesPathsApi26(root);
+            listFiles = searchFilesPaths(root);
 
         } else {
             Log.d("TEST", "searchFilesPaths: run");
-            listFiles = searchFilesPaths(root);
+            listFiles = new ArrayList<>();
+            listFiles = searchFilesPaths(root, listFiles);
         }
 
-
-        assert listFiles != null;
         for (File file : listFiles) {
             listPhotos.add(new Photo(file.getAbsolutePath()));
             Log.d("TEST", file.getAbsolutePath());
@@ -48,16 +46,14 @@ public class PhotoGalleryModel {
 
     //поиск файлов по фильтру для >= API26
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private List<File> searchFilesPathsApi26(@NonNull File path) throws IOException {
+    private List<File> searchFilesPaths(@NonNull File path) throws IOException {
 
         return Files.walk(path.toPath()).map(Path::toFile).filter(this::fileFiler).collect(Collectors.toList());
 
     }
 
     //поиск файлов по фильтру
-    private List<File> searchFilesPaths(@NonNull File root) {
-
-        List<File> fileList = new ArrayList<>();
+    private List<File> searchFilesPaths(@NonNull File root, List<File> fileList) {
 
         if (!root.isDirectory()) {
             return fileList;
@@ -71,13 +67,14 @@ public class PhotoGalleryModel {
 
         for (File file : directoryFiles) {
             if (file.isDirectory()) {
-                fileList.addAll(searchFilesPaths(file));
+                fileList = searchFilesPaths(file, fileList);
             } else {
                 if (fileFiler(file)) {
                     fileList.add(file);
                 }
             }
         }
+
         return fileList;
     }
 
